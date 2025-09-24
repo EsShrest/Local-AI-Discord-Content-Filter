@@ -1,6 +1,25 @@
 # Discord Content Moderation Bot
 
-AI-powered Discord bot using Ollama for intelligent content filtering.
+AI-powered Discord bot using Ollama for intelligent content filtering with complete local processing.
+
+## How It Works
+
+### Information Flow
+```
+Discord Message → Pre-filtering → AI Analysis → Decision Logic → Action
+```
+
+1. **Message Reception**: Bot receives all Discord messages
+2. **Smart Filtering**: Skips bot messages, admin users, and commands
+3. **AI Analysis**: Sends message to local Ollama server for analysis
+4. **Decision Making**: Uses confidence threshold (70%) to determine action
+5. **Automated Response**: Deletes inappropriate content and warns user
+
+### AI Analysis Process
+- **Local Processing**: Uses Ollama (llama3:latest) running on localhost:11434
+- **Context Awareness**: Understands intent, not just keywords
+- **Multi-category Detection**: Profanity, hate speech, harassment, threats, spam
+- **Confidence Scoring**: Only acts on high-confidence detections (>70%)
 
 ## Quick Setup
 
@@ -12,10 +31,12 @@ AI-powered Discord bot using Ollama for intelligent content filtering.
 
 ## Features
 
-- Automatic content moderation using local AI
-- Admin commands for testing and configuration
-- Privacy-focused (runs entirely locally)
-- Configurable filtering sensitivity
+- **100% Local AI** - No external API calls, complete privacy
+- **Real-time Moderation** - Processes messages in 2-3 seconds
+- **Context Understanding** - AI comprehends meaning, not just keywords
+- **Configurable Sensitivity** - Adjustable confidence thresholds
+- **Admin Commands** - Testing and configuration tools
+- **Detailed Logging** - Full transparency of all decisions
 
 ## Bot Permissions Required
 
@@ -23,8 +44,29 @@ AI-powered Discord bot using Ollama for intelligent content filtering.
 - Send Messages
 - Manage Messages
 
-## Commands
+## Commands (Admin Only)
 
-- `!test_filter <message>` - Test content filter
-- `!filter_stats` - Show bot status
-- `!set_model <model>` - Change AI model
+- `!test_filter <message>` - Test content filter on specific text
+- `!filter_stats` - Show Ollama connection and model status
+- `!set_model <model>` - Switch between available AI models
+
+## Example Flow
+
+```
+User: "This is fucking stupid!"
+  ↓
+Bot: Receives message → Not admin/command → Analyze
+  ↓
+AI: Analysis → 95% inappropriate (profanity)
+  ↓
+Bot: 95% > 70% threshold → DELETE + WARN
+  ↓
+Result: Message removed, user notified
+```
+
+## Privacy & Security
+
+- **Local Processing**: All AI analysis happens on your machine
+- **No Data Sharing**: Messages never leave your server
+- **Token Protection**: Bot token excluded from repository
+- **Open Source**: Full code transparency
